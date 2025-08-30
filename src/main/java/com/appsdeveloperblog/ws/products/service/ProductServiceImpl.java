@@ -35,13 +35,15 @@ public class ProductServiceImpl implements ProductService {
         kafkaTemplate.send("product-created-events-topic", productId, productCreatedEvent)
                 .thenAccept(result -> {
                     if (result != null) {
-                        log.info("Message sent successfully: {}", result.getRecordMetadata());
+                        log.info("****** Message sent successfully: {}", result.getRecordMetadata());
                     }
                 })
                 .exceptionally(exception -> {
-                    log.error("Failed to send message: {}", exception.getMessage());
+                    log.error("****** Failed to send message: {}", exception.getMessage());
                     return null;
                 });
+
+        log.info("****** Returning product id");
 
         return productId;
     }
