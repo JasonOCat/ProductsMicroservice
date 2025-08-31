@@ -7,7 +7,13 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       acks: all
-      retries: 10
+#      retries: 10
       properties:
-        retry.backoff.ms: 1000
+        # retry.backoff.ms: 1000 # (Optional) The time to wait before retrying a failed request. Uncomment and configure if retries are enabled.
+        delivery.timeout.ms: 3000 # The maximum time (in milliseconds) to wait for a message to be delivered before timing out.
+        linger.ms: 0 # The delay (in milliseconds) to group messages before sending; 0 means no delay (send immediately).
+        request.timeout.ms: 3000 # The maximum time (in milliseconds) a producer will wait for a broker to respond to a request.
+
+
+
 
