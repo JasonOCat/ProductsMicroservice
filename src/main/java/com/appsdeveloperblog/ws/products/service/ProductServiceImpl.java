@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
                     }
                 })
                 .exceptionally(exception -> {
-                    log.error("****** Failed to send message: {}", exception.getMessage());
+                    log.error("****** Failed to send message: {}", exception.getMessage(), exception);
                     return null;
                 });
 
