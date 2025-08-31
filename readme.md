@@ -5,4 +5,9 @@ Launch the kafka servers with docker compose command :
 Create a product 
 ```
 POST http://localhost:8080/products</code
+{
+  "title": "Sample Product",
+  "price": 100,
+  "description": 19
+}
 ```
