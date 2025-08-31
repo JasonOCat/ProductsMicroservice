@@ -1,24 +1,20 @@
 package com.appsdeveloperblog.ws.products.service;
 
 import com.appsdeveloperblog.ws.products.rest.CreateProductRestModel;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    private final KafkaTemplate<String, ProductCreatedEvent> kafkaTemplate;
-
-    public ProductServiceImpl(KafkaTemplate<String, ProductCreatedEvent> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
+    private final KafkaTemplate<String, ProductCreatedEvent> kafkaProductTemplate;
 
     @Override
     public String createProduct(CreateProductRestModel productRestModel) {
@@ -33,17 +29,17 @@ public class ProductServiceImpl implements ProductService {
                 productRestModel.getPrice(),
                 productRestModel.getQuantity()
         );
-        kafkaTemplate.send("product-created-events-topic", productId, productCreatedEvent)
+        kafkaProductTemplate.send("product-created-events-topic", productId, productCreatedEvent)
                 .thenAccept(result -> {
                     if (result != null) {
                         RecordMetadata recordMetadata = result.getRecordMetadata();
                         log.info("****** Message sent successfully: {}", recordMetadata);
                         log.info(
-                            """
-                            Partition: {},
-                            Topic: {},
-                            Offset: {}
-                            """,
+                                """
+                                        Partition: {},
+                                        Topic: {},
+                                        Offset: {}
+                                        """,
                                 recordMetadata.partition(),
                                 recordMetadata.topic(),
                                 recordMetadata.offset()
