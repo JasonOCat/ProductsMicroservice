@@ -2,6 +2,7 @@ package com.appsdeveloperblog.ws.products.service;
 
 import com.appsdeveloperblog.ws.products.rest.CreateProductRestModel;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,20 @@ public class ProductServiceImpl implements ProductService {
         kafkaTemplate.send("product-created-events-topic", productId, productCreatedEvent)
                 .thenAccept(result -> {
                     if (result != null) {
-                        log.info("****** Message sent successfully: {}", result.getRecordMetadata());
+                        RecordMetadata recordMetadata = result.getRecordMetadata();
+                        log.info("****** Message sent successfully: {}", recordMetadata);
+                        log.info(
+                            """
+                            Partition: {},
+                            Topic: {},
+                            Offset: {}
+                            """,
+                                recordMetadata.partition(),
+                                recordMetadata.topic(),
+                                recordMetadata.offset()
+                        );
+
+
                     }
                 })
                 .exceptionally(exception -> {
