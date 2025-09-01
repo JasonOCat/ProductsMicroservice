@@ -15,7 +15,6 @@ public class KafkaProducerProperties {
     private String keySerializer;
     private String valueSerializer;
     private String acks;
-    @NonNull
     private PropertiesProperty properties;
 
     @Getter
@@ -24,6 +23,8 @@ public class KafkaProducerProperties {
         private Integer deliveryTimeoutMs;
         private Integer lingerMs;
         private Integer requestTimeoutMs;
+        private boolean idempotence;
+        private Integer maxInFlightRequestsPerConnection;
 
     }
 }

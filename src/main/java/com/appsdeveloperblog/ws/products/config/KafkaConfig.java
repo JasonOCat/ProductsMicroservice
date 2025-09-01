@@ -31,6 +31,9 @@ public class KafkaConfig {
         config.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, kafkaProducerProperties.getProperties().getDeliveryTimeoutMs());
         config.put(ProducerConfig.LINGER_MS_CONFIG, kafkaProducerProperties.getProperties().getLingerMs());
         config.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, kafkaProducerProperties.getProperties().getRequestTimeoutMs());
+        config.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, kafkaProducerProperties.getProperties().isIdempotence());
+        config.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, kafkaProducerProperties.getProperties().getMaxInFlightRequestsPerConnection());
+//        config.put(ProducerConfig.RETRIES_CONFIG, Integer.MAX_VALUE);
 
         return config;
     }
@@ -50,7 +53,7 @@ public class KafkaConfig {
         return TopicBuilder.name("product-created-events-topic")
                 .partitions(3)
                 .replicas(3)
-                .configs(Map.of("min.insync.replicas", "3"))
+                .configs(Map.of("min.insync.replicas", "2"))
                 .build();
     }
 }
