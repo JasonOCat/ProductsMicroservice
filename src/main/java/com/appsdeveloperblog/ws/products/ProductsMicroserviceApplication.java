@@ -17,11 +17,4 @@ public class ProductsMicroserviceApplication {
         SpringApplication.run(ProductsMicroserviceApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner runner(){
-        return args -> {
-            System.out.println("**" + kafkaProducerProperties.getProperties().getDeliveryTimeoutMs());
-        };
-    }
-
 }

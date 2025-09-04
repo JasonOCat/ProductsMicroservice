@@ -1,6 +1,7 @@
 package com.appsdeveloperblog.ws.products.config;
 
 import com.appsdeveloperblog.ws.products.ProductCreatedEvent;
+import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
