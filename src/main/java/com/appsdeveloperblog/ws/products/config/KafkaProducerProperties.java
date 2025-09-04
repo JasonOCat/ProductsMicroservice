@@ -1,7 +1,6 @@
 package com.appsdeveloperblog.ws.products.config;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -25,6 +24,7 @@ public class KafkaProducerProperties {
         private Integer requestTimeoutMs;
         private boolean idempotence;
         private Integer maxInFlightRequestsPerConnection;
+        private String schemaRegistryUrl;
 
     }
 }

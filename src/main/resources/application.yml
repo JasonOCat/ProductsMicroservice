@@ -5,10 +5,10 @@ spring:
     producer:
       bootstrap-servers: localhost:9092, localhost:9094
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       acks: all
 #      retries: 10
-      properties:
+      properties: #config du kafkatemplate dans KafkaConfig, ajouter les nouvelles propriétés dans KafkaProduerProperties
         # retry.backoff.ms: 1000 # (Optional) The time to wait before retrying a failed request. Uncomment and configure if retries are enabled.
         delivery-timeout-ms: 3000 # The maximum time (in milliseconds) to wait for a message to be delivered before timing out.
         linger-ms: 0 # The delay (in milliseconds) to group messages before sending; 0 means no delay (send immediately).
@@ -16,6 +16,7 @@ spring:
         idempotence: true  # Ensures Kafka guarantees message delivery exactly-once or at-least-once. This avoids duplicate message publishing.
         max-in-flight-requests-per-connection: 5  # The maximum number of unacknowledged requests sent to the broker before blocking further requests.
         # Essential for maintaining message order and ensuring reliability with idempotent producers.
+        schema-registry-url: "http://localhost:8081"
 
 
 

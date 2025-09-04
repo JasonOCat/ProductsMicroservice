@@ -1,6 +1,7 @@
 package com.appsdeveloperblog.ws.products.config;
 
-import com.appsdeveloperblog.ws.products.service.ProductCreatedEvent;
+import com.appsdeveloperblog.ws.products.ProductCreatedEvent;
+import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,7 @@ public class KafkaConfig {
         config.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, kafkaProducerProperties.getProperties().isIdempotence());
         config.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, kafkaProducerProperties.getProperties().getMaxInFlightRequestsPerConnection());
 //        config.put(ProducerConfig.RETRIES_CONFIG, Integer.MAX_VALUE);
+        config.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, kafkaProducerProperties.getProperties().getSchemaRegistryUrl());
 
         return config;
     }
