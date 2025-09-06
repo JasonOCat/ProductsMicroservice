@@ -52,16 +52,16 @@ services:
     volumes:
       - ./docker-compose/volumes/server-3:/bitnami/kafka
 
-  kafka-schema-registry:
-    image: confluentinc/cp-schema-registry:7.2.15
-    hostname: kafka-schema-registry
-    depends_on:
-      - kafka-1
-      - kafka-2
-      - kafka-3
-    ports:
-      - "8081:8081"
-    environment:
-      SCHEMA_REGISTRY_HOST_NAME: kafka-schema-registry
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka-1:9090,kafka-2:9090,kafka-3:9090
-      SCHEMA_REGISTRY_LISTENERS: http://kafka-schema-registry:8081
+#  kafka-schema-registry:
+#    image: confluentinc/cp-schema-registry:7.2.15
+#    hostname: kafka-schema-registry
+#    depends_on:
+#      - kafka-1
+#      - kafka-2
+#      - kafka-3
+#    ports:
+#      - "8081:8081"
+#    environment:
+#      SCHEMA_REGISTRY_HOST_NAME: kafka-schema-registry
+#      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka-1:9090,kafka-2:9090,kafka-3:9090
+#      SCHEMA_REGISTRY_LISTENERS: http://kafka-schema-registry:8081
