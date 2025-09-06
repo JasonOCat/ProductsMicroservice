@@ -3,9 +3,10 @@ spring:
     name: ProductsMicroservice
   kafka:
     producer:
-      bootstrap-servers: localhost:9092, localhost:9094
+      bootstrap-servers: localhost:9092,localhost:9094
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+#      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       acks: all
 #      retries: 10
       properties: #config du kafkatemplate dans KafkaConfig, ajouter les nouvelles propriétés dans KafkaProduerProperties
