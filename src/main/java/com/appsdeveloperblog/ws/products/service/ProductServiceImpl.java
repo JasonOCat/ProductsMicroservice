@@ -4,6 +4,7 @@ import com.appsdeveloperblog.ws.products.ProductCreatedEvent;
 import com.appsdeveloperblog.ws.products.rest.CreateProductRestModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,14 @@ public class ProductServiceImpl implements ProductService {
 //                encodedPrice,
                 productRestModel.getQuantity()
         );
+        ProducerRecord<String, ProductCreatedEvent> record = new ProducerRecord<>(
+                "product-created-events-topic",
+                productId,
+                productCreatedEvent
+        );
+
+        record.headers().add("messageId", UUID.randomUUID().toString().getBytes());
+
         kafkaProductTemplate.send("product-created-events-topic", productId, productCreatedEvent)
                 .thenAccept(result -> {
                     if (result != null) {
